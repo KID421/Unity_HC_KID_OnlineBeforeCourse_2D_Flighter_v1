@@ -20,31 +20,44 @@ namespace KID
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Damage(collision.tag);
+            Damage(collision.gameObject);
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            Damage(collision.gameObject.tag);
+            Damage(collision.gameObject);
         }
 
         /// <summary>
         /// 受傷
         /// </summary>
         /// <param name="hitTag">碰撞物件的標籤</param>
-        private void Damage(string hitTag)
+        private void Damage(GameObject hit)
         {
             for (int i = 0; i < tagDamages.Length; i++)
             {
-                if (hitTag == tagDamages[i])
+                if (hit.tag.Contains(tagDamages[i]))
                 {
                     health--;
                     SoundManager.instance.PlaySound(soundDamage);
+                    DestroyBullet(hit);
                     break;
                 }
             }
 
             if (health <= 0) Dead();
+        }
+
+        /// <summary>
+        /// 刪除子彈
+        /// </summary>
+        /// <param name="hit">碰撞物件</param>
+        private void DestroyBullet(GameObject hit)
+        {
+            if (hit.name.Contains("子彈"))
+            {
+                Destroy(hit);
+            }
         }
 
         /// <summary>
