@@ -41,7 +41,6 @@ namespace KID
                     health--;
                     SoundManager.instance.PlaySound(soundDamage);
                     DestroyBullet(hit);
-                    break;
                 }
             }
 
